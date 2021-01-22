@@ -15,7 +15,7 @@ export class CartComponent implements OnInit {
 
   ngOnInit() {
     this.products = JSON.parse(localStorage.getItem('productList'));
-    if (!this.products[0]) {
+    if (!this.products) {
       fetch('https://fakestoreapi.com/products')
         .then(res => res.json())
         .then(

@@ -8,11 +8,15 @@ const routes: Routes = [
   {
     path: 'shop',
     component: ShopComponent,
-},
+  },
   {
     path: 'cart',
     component: CartComponent,
-},
+  },
+  {
+    path: '',
+    component: CartComponent,
+  },
 ];
 
 @NgModule({
