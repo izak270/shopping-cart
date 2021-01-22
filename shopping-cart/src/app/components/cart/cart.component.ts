@@ -8,44 +8,54 @@ import { Component, OnInit } from '@angular/core';
 export class CartComponent implements OnInit {
 
   products = [];
-  somePrice = 0;
+  somePrice: number;
   shippingPrice: number
 
   constructor() { }
 
   ngOnInit() {
     this.products = JSON.parse(localStorage.getItem('productList'));
-    console.log(this.products);
     if (!this.products[0]) {
       fetch('https://fakestoreapi.com/products')
         .then(res => res.json())
         .then(
           data => {
             this.products = data
-            this.products.forEach(item => {
-              item.price
-              this.somePrice += item.price
-              this.shippingPrice = this.products.length > 5 ? this.calcShippingPrice() : 2
-              item.quantity = 1
-            });
-            localStorage.setItem('productList', JSON.stringify(this.products));
-            this.somePrice = Math.round(this.somePrice)
+            this.calculatePrices()
+
           }
         )
+    } else {
+      this.calculatePrices()
     }
   }
+
+  calculatePrices() {
+    this.somePrice = 0
+    this.products.forEach(item => {
+      if (!item.quantity) { item.quantity = 1 }
+      this.somePrice += item.price * item.quantity
+      this.shippingPrice = this.products.length > 4 ? this.calcShippingPrice() : 2
+    });
+    this.saveOnLocalStorage()
+    this.somePrice = Math.round(this.somePrice)
+  }
+
   calcShippingPrice() {
     return this.products.length * 3
   }
 
   addItem(index) {
     this.products[index].quantity++
-    localStorage.setItem('productList', JSON.stringify(this.products));
+    this.calculatePrices()
   }
 
   remove(index) {
     this.products.splice(index, 1);
-    localStorage.setItem('productList', JSON.stringify(this.products));
+    this.calculatePrices()
   }
 
+  saveOnLocalStorage() {
+    localStorage.setItem('productList', JSON.stringify(this.products));
+  }
 }
