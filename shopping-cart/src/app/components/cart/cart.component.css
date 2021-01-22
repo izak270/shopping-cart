@@ -1,8 +1,0 @@
-.cart_contaniner{
-    display:flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-}
-.card{
-    margin-top: 50px;
-}
