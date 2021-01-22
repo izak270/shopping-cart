@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Subtotal: {{somePrice}}$</h5>
+                <p class="card-text">Shipping: {{shippingPrice}}$</p>
+                <h5 class="card-title">Total: {{somePrice+shippingPrice}}$</h5>
+                <a href="#" class="btn btn-primary">Buy</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="cart_contaniner">
+    <div *ngFor="let item of products; let i = index" class="card" style="width: 18rem;">
+        <div class="buttons">
+            <button type="button" class="btn btn-danger" (click)="remove(i)">Remove</button>
+            <button type="button" class="btn btn-success" (click)="addItem(i)">+</button>
+        </div>
+        <img class="card-img-top" [src]="item.image" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">{{item.title}}</h5>
+            <p class="card-text">{{item.description}}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Category: {{item.category}}</li>
+            <li class="list-group-item">Price: {{item.price}}$</li>
+            <li class="list-group-item">Quantity: {{item.quantity}}</li>
+        </ul>
+    </div>
+</div>
